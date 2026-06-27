@@ -89,6 +89,18 @@ footer nav a:hover {
   color: var(--teal);
 }
 
+.menu-toggle {
+  display: none;
+  width: 2.45rem;
+  height: 2.45rem;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  background: white;
+  color: var(--navy);
+  cursor: pointer;
+}
+
 .header-cta,
 .button {
   display: inline-flex;
@@ -433,6 +445,16 @@ p {
   line-height: 1.8;
 }
 
+.sources a {
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.sources a:hover {
+  color: var(--teal);
+  text-decoration: underline;
+}
+
 .resource-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -483,11 +505,43 @@ footer nav {
 
 @media (max-width: 900px) {
   .site-header {
-    align-items: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .menu-toggle {
+    display: grid;
+    order: 2;
   }
 
   .site-header nav {
     display: none;
+    order: 4;
+    flex-basis: 100%;
+    justify-content: flex-start;
+    gap: 0.25rem;
+    border: 1px solid var(--line);
+    border-radius: 0.8rem;
+    background: white;
+    padding: 0.65rem;
+    box-shadow: 0 12px 30px rgba(16, 32, 51, 0.08);
+  }
+
+  .site-header nav.is-open {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .site-header nav a {
+    border-radius: 0.55rem;
+    padding: 0.7rem;
+    color: var(--navy);
+    font-weight: 800;
+  }
+
+  .site-header nav a:hover,
+  .site-header nav a:focus-visible {
+    background: var(--soft-teal);
   }
 
   .hero-grid,
@@ -527,6 +581,10 @@ footer nav {
     padding: 0.7rem 1rem;
   }
 
+  .menu-toggle {
+    order: 3;
+  }
+
   .brand span:last-child {
     max-width: 10.5rem;
     white-space: normal;
@@ -534,9 +592,14 @@ footer nav {
   }
 
   .header-cta {
+    order: 2;
     min-height: 2.4rem;
     padding: 0.55rem 0.7rem;
     font-size: 0.88rem;
+  }
+
+  .site-header nav.is-open {
+    grid-template-columns: 1fr;
   }
 
   .hero {

@@ -10,12 +10,14 @@ import {
   FolderOpen,
   GraduationCap,
   Mail,
+  Menu,
   MonitorCheck,
   Printer,
   SearchCheck,
   ShieldCheck,
   Sparkles,
   Video,
+  X,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
@@ -96,23 +98,23 @@ const goodPractices = [
 const resourceCategories = [
   {
     title: "Currículo e preparação para vagas",
-    text: "Reserve este espaço para orientações e links oficiais sobre documentação profissional, carteira de trabalho e preparação para candidaturas.",
+    text: "Revise seu currículo antes de cada candidatura e adapte suas informações aos requisitos da vaga. Mantenha seus dados de contato atualizados e destaque experiências, cursos e habilidades relevantes.",
   },
   {
     title: "Documentos e planilhas",
-    text: "Priorize materiais que ensinem criação de documentos, organização de arquivos, planilhas simples e apresentações.",
+    text: "Pratique criar documentos simples, organizar arquivos em pastas e utilizar planilhas básicas. Essas habilidades ajudam em processos seletivos e nas atividades do dia a dia profissional.",
   },
   {
     title: "Comunicação profissional",
-    text: "Busque guias sobre e-mail profissional, mensagens objetivas e postura adequada em contatos com empresas.",
+    text: "Use e-mails claros, mensagens objetivas e uma linguagem respeitosa ao falar com empresas. Leia sua mensagem antes de enviar e evite abreviações excessivamente informais.",
   },
   {
     title: "Entrevistas on-line",
-    text: "Use materiais que ajudem a testar câmera, microfone, conexão e ambiente antes de uma entrevista por vídeo.",
+    text: "Antes da entrevista, teste a câmera, o microfone, a conexão com a internet e o ambiente ao seu redor. Procure um local silencioso e mantenha seus documentos por perto.",
   },
   {
     title: "Segurança digital",
-    text: "Inclua fontes confiáveis sobre proteção de dados pessoais, golpes em vagas e uso seguro de links recebidos.",
+    text: "Nunca compartilhe senhas, códigos de confirmação ou dados bancários durante processos seletivos. Confirme informações da empresa antes de responder a contatos suspeitos.",
   },
 ];
 
@@ -136,12 +138,14 @@ function usePersistentChecklist(key: string, ids: string[]) {
 }
 
 function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const links = [
     ["Início", "#inicio"],
     ["Habilidades", "#habilidades"],
     ["Plano de 7 dias", "#plano"],
     ["Busca segura", "#busca-segura"],
     ["Recursos", "#recursos"],
+    ["Sobre", "#sobre"],
   ];
 
   return (
@@ -150,9 +154,23 @@ function Header() {
         <span className="brand-mark">PP</span>
         <span>Primeiros Passos Digitais</span>
       </a>
-      <nav aria-label="Navegação principal">
+      <button
+        className="menu-toggle"
+        type="button"
+        aria-label={isMenuOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
+        aria-expanded={isMenuOpen}
+        aria-controls="primary-navigation"
+        onClick={() => setIsMenuOpen((open) => !open)}
+      >
+        {isMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
+      </button>
+      <nav
+        id="primary-navigation"
+        className={isMenuOpen ? "is-open" : ""}
+        aria-label="Navegação principal"
+      >
         {links.map(([label, href]) => (
-          <a key={href} href={href}>
+          <a key={href} href={href} onClick={() => setIsMenuOpen(false)}>
             {label}
           </a>
         ))}
@@ -332,10 +350,7 @@ function Resources() {
       <div className="section-heading">
         <span className="eyebrow">Recursos para continuar aprendendo</span>
         <h2>Escolha uma área e pratique aos poucos</h2>
-        <p>
-          A lista abaixo organiza os temas do guia. Antes de divulgar links externos, confirme se a
-          fonte é oficial, gratuita, atual e adequada ao público jovem.
-        </p>
+        <p>Escolha uma habilidade para praticar aos poucos e avance no seu ritmo.</p>
       </div>
       <div className="resource-grid">
         {resourceCategories.map((resource) => (
@@ -371,9 +386,21 @@ function About() {
       <aside className="sources" aria-label="Fontes do projeto">
         <h3>Fontes do relatório</h3>
         <ul>
-          <li>IBGE. Agência de Notícias, 2026.</li>
-          <li>CGI.br. TIC Domicílios 2024: resumo executivo, 2025.</li>
-          <li>IPEA. ODS 8: Trabalho Decente e Crescimento Econômico.</li>
+          <li>
+            <a href="https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/47222-cai-a-proporcao-de-jovens-que-nao-trabalham-nao-estudam-e-nem-se-qualificam">
+              IBGE: Cai a proporção de jovens que não trabalham, não estudam e nem se qualificam.
+            </a>
+          </li>
+          <li>
+            <a href="https://cetic.br/media/docs/publicacoes/2/20250512115624/tic_domicilios_2024_resumo_executivo.pdf">
+              CGI.br: TIC Domicílios 2024 - resumo executivo.
+            </a>
+          </li>
+          <li>
+            <a href="https://www.ipea.gov.br/ods/ods8.html">
+              IPEA: ODS 8 - Trabalho Decente e Crescimento Econômico.
+            </a>
+          </li>
         </ul>
       </aside>
     </section>
@@ -422,6 +449,7 @@ function App() {
           <a href="#plano">Plano de 7 dias</a>
           <a href="#busca-segura">Busca segura</a>
           <a href="#recursos">Recursos</a>
+          <a href="#sobre">Sobre</a>
         </nav>
       </footer>
     </>
